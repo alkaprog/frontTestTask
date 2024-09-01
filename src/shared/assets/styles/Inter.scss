@@ -1,0 +1,23 @@
+@use "./mixins/font.scss" as font;
+
+ $font-path: '../fonts/Inter/';
+
+ $black-path: 			    $font-path + 'Black/Inter-Black';
+ $bold-path: 			    $font-path + 'Bold/Inter-Bold';
+ $extra-bold-path: 			$font-path + 'ExtraBold/Inter-ExtraBold';
+ $extra-light-path: 		$font-path + 'ExtraLight/Inter-ExtraLight';
+ $light-path: 			    $font-path + 'Light/Inter-Light';
+ $medium-path: 			    $font-path + 'Medium/Inter-Medium';
+ $regular-path: 			$font-path + 'Regular/Inter-Regular';
+ $semi-bold-path: 			$font-path + 'SemiBold/Inter-SemiBold';
+ $thin-path: 			    $font-path + 'Thin/Inter-Thin';
+
+ @include font.use-font(Inter, $black-path, 900, normal);
+ @include font.use-font(Inter, $bold-path, 700, normal);
+ @include font.use-font(Inter, $extra-bold-path, 800, normal);
+ @include font.use-font(Inter, $extra-light-path, 200, normal);
+ @include font.use-font(Inter, $light-path, 300, normal);
+ @include font.use-font(Inter, $medium-path, 500, normal);
+ @include font.use-font(Inter, $regular-path, 400, normal);
+ @include font.use-font(Inter, $semi-bold-path, 600, normal);
+ @include font.use-font(Inter, $thin-path, 100, normal);

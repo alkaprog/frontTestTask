@@ -21,7 +21,7 @@ export default defineNuxtConfig({
       autoprefixer: {},
     },
   },
-  css: ["~/src/shared/styles/main.css"],
+  css: ["~/src/shared/assets/styles/main.scss"],
   build: {
     transpile: ["vuetify"],
   },
@@ -32,7 +32,13 @@ export default defineNuxtConfig({
         config.plugins.push(vuetify({ autoImport: true }));
       });
     },
+    "@vueuse/nuxt",
   ],
+  runtimeConfig: {
+    public: {
+      yandexMapApiKey: process.env.NUXT_PUBLIC_YNDX_MAP_API_KEY,
+    },
+  },
   vite: {
     vue: {
       template: {
