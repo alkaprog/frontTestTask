@@ -1,36 +1,45 @@
-import { useCookie, useFetch, type UseFetchOptions } from "nuxt/app";
-import { type DataType } from "shared";
+import { useCookie, type UseFetchOptions } from "nuxt/app";
+import { defu } from "defu";
 
-export const useRequest = <T>(
-  url: (() => string) | string,
-  options?: UseFetchOptions<DataType<T>>,
+export function useRequest<T>(
+  url: string | (() => string),
+  _options: UseFetchOptions<T> = {},
   auth: boolean = false,
-) => {
-  const token = useCookie("accessToken");
+) {
+  const tokensRefreshUrl = "/api/refresh";
+  const access_token = useCookie("accessToken");
+  const refresh_token = useCookie("refreshToken");
 
-  const result = useFetch(url, {
-    ...options,
+  const defaults: UseFetchOptions<T> = {
+    retryStatusCodes: [401],
+    retry: 1,
     onRequest({ options }): void {
       const baseHeaders = { ...options.headers, accept: "application/json" };
 
       options.headers = auth
-        ? { ...baseHeaders, authorization: `Bearer ${token.value}` }
+        ? { ...baseHeaders, authorization: `Bearer ${access_token.value}` }
         : baseHeaders;
     },
-    onResponse({ response, options }): void {
-      if (response?.status === 401) {
-        try {
-          const newToken = "123";
-          token.value = newToken;
-
-          options.headers = { Authorization: `Bearer ${newToken}` };
-          useFetch(url, options as UseFetchOptions<T>);
-        } catch (error) {
-          token.value = null;
-        }
+    async onResponseError({ response }) {
+      if (response.status === 401 && refresh_token.value) {
+        await $fetch(tokensRefreshUrl, {
+          method: "POST",
+          body: {
+            token: refresh_token.value,
+          },
+        })
+          .then((response) => {
+            access_token.value = response.access_token;
+            refresh_token.value = response.refresh_token;
+            return response;
+          })
+          .catch((error) => {
+            console.log(error, "ErrorRefreshToken");
+            return error;
+          });
       }
     },
-  });
-
-  return result;
-};
+  };
+  const params = defu(_options, defaults);
+  return useFetch(url, params);
+}
