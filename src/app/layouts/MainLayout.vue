@@ -7,7 +7,7 @@ import {
   navMenuItems,
   routesToShowBaseInfoOnMobile,
 } from "app";
-import { useUserStore } from "entities/user";
+import { useUserStore } from "entities/user/model/user.store";
 import UserBar from "entities/user/ui/UserBar.vue";
 
 const { isDesktop } = useDeviceDetector();
