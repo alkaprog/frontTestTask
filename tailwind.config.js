@@ -8,6 +8,7 @@ module.exports = {
   ],
   theme: {
     colors: {
+      white: "#FFFFFF",
       "bg-grey": "#E8E8E8",
       "bg-light-grey": "#F5F5F5",
       "dark-grey": "#6B6B6B",
@@ -19,7 +20,7 @@ module.exports = {
       sans: ["Inter", "sans-serif"],
     },
     fontSize: {
-      xs: ["12px", "16px"],
+      xs: ["11px", "12px"],
       sm: ["15px", "24px"],
       base: ["17px", "28px"],
       lg: ["18px", "22px"],
