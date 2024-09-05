@@ -1,6 +1,6 @@
 import { useRequest } from "~/src/shared";
 
-export const login = (login: string, password: string) => {
+export function login(login: string, password: string) {
   return useRequest<{
     access_token: string;
     refresh_token: string;
@@ -11,4 +11,4 @@ export const login = (login: string, password: string) => {
       password,
     },
   });
-};
+}
