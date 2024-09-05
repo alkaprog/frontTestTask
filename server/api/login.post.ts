@@ -1,17 +1,16 @@
-let validAccess = "123";
-const validRefresh = "321";
+import { getValidAccessToken } from "~/server/helpers";
 
-const swapTokens = () => {
-  validAccess = validAccess.split("").reverse().join("");
-};
 export default defineEventHandler(async (event) => {
   const { login, password } = await readBody(event);
 
   if (login === "admin" && password === "secret") {
-    setTimeout(() => swapTokens(), 3000);
     return {
-      access_token: validAccess,
-      refreshToken: validRefresh,
+      access_token: getValidAccessToken(),
+      refreshToken: "321",
     };
   }
+  throw createError({
+    statusCode: 401,
+    statusMessage: "Wrong credentials",
+  });
 });
