@@ -1,11 +1,27 @@
 <script setup lang="ts">
-import { login } from "shared";
+// import { login } from "shared/model/utils/auth-utils";
+
+import { useRequest } from "shared";
 
 const router = useRouter();
 
 const userLogin = ref("");
 const userPassword = ref("");
 const error = ref("");
+
+// по неведомой причине импорт этой функции из файла кидает ошибку, поэтому так
+const login = (login: string, password: string) => {
+  return useRequest<{
+    access_token: string;
+    refresh_token: string;
+  }>("/api/login", {
+    method: "POST",
+    body: {
+      login,
+      password,
+    },
+  });
+};
 
 const submit = async () => {
   const { data, status } = await login(userLogin.value, userPassword.value);
