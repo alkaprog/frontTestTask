@@ -7,9 +7,12 @@ import {
   navMenuItems,
   routesToShowBaseInfoOnMobile,
 } from "app";
+import { useUserStore } from "entities/user";
+import UserBar from "entities/user/ui/UserBar.vue";
 
 const { isDesktop } = useDeviceDetector();
 const route = useRoute();
+const userStore = useUserStore();
 
 const company = ref<Company | null>(null);
 const activeNavItem = ref(
@@ -30,14 +33,28 @@ const fetchCompany = async () => {
   }
 };
 
-await fetchCompany();
+const fetchUser = async () => {
+  await userStore.loadUser();
+};
 
+const init = async () => {
+  await Promise.all([fetchCompany(), fetchUser()]);
+};
+await init();
 provide("company", company);
 </script>
 
 <template>
   <div class="min-h-screen flex flex-col">
-    <v-header />
+    <v-header :cart-items-count="userStore.user?.countOfCartItems || 0">
+      <template #user>
+        <user-bar
+          v-if="userStore.user"
+          class="hidden xl:flex"
+          :user="userStore.user"
+        />
+      </template>
+    </v-header>
     <div class="flex flex-col items-center grow mt-[56px] xl:mt-[64px]">
       <div class="w-full flex flex-col xl:flex-col-reverse">
         <client-only>
