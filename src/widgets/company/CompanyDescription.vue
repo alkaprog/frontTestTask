@@ -12,7 +12,7 @@ defineProps({
 
 <template>
   <div class="p-4 xl:p-[20px]">
-    <h2 class="mb-2 text-xl font-bold xl:text-2xl">О компании</h2>
+    <h1 class="mb-2 text-xl font-bold xl:text-2xl">О компании</h1>
     <div class="text-sm xl:text-base">{{ company?.description }}</div>
   </div>
 </template>
