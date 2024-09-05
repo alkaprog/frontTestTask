@@ -7,10 +7,10 @@ definePageMeta({
   layout: "main-layout",
 });
 
-const selectedFilter = ref(goodFilterOptions[0].value);
+const selectedFilter = ref(goodFilterOptions[0].value as number | null);
 const goods = ref<Good[]>([]);
 
-const fetchGoods = async (category: number) => {
+const fetchGoods = async (category: number | null) => {
   const { data, status } = await getGoodList(category);
   if (status.value === "success" && data.value) {
     goods.value = data.value;

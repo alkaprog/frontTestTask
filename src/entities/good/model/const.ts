@@ -1,24 +1,24 @@
 export const goodFilterOptions = [
   {
     title: "Все товары и услуги",
-    value: 1,
+    value: null,
   },
   { props: { header: "Категория 1" } },
   {
     title: "Гробы",
-    value: 2,
+    value: 1,
   },
   {
     title: "Урны",
-    value: 3,
+    value: 2,
   },
   { props: { header: "Категория 2" } },
   {
     title: "Тапки",
-    value: 4,
+    value: 3,
   },
   {
     title: "Покрывало",
-    value: 5,
+    value: 4,
   },
 ];
