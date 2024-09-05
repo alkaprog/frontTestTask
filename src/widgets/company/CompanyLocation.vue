@@ -9,10 +9,12 @@ const props = defineProps({
   },
 });
 
+const config = useRuntimeConfig();
+
 useHead({
   script: [
     {
-      src: "https://api-maps.yandex.ru/2.1/?apikey=48723372-2e2f-409b-b2b7-b8caa2590227&lang=ru_RU",
+      src: `https://api-maps.yandex.ru/2.1/?apikey=${config.public.yandexMapApiKey}&lang=ru_RU`,
       onload: () => {
         window.ymaps.ready(initMap);
       },
